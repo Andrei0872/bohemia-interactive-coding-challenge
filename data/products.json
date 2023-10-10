@@ -56,7 +56,7 @@
       "price": 101,
       "currency": "USD",
       "image": {
-        "src": "https://images.pexels.com/photos/235922/pexels-photo-235922.jpeg?auto=compress&cs=tinysrgb&w=1600",
+        "src": "https://images.pexels.com/photos/235922/pexels-photo-235922.jpeg?auto=compress&cs=tinysrgb&w=1020&h=1020",
         "alt": ""
       },
       "bestseller": false,
@@ -67,9 +67,16 @@
           "height": 1020
         },
         "size": 15000,
-        "description": "So how did the classical Latin become so incoherent? According to McClintock, a15th century typesetter likely","recommendations": [
+        "description": "So how did the classical Latin become so incoherent? According to McClintock, a15th century typesetter likely",
+        "recommendations": [
           {
-            "src": ""
+            "src": "https://images.pexels.com/photos/1172253/pexels-photo-1172253.jpeg?auto=compress&cs=tinysrgb&w=1600"
+          },
+          {
+            "src": "https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&w=1600"
+          },
+          {
+            "src": "https://images.pexels.com/photos/1172253/pexels-photo-1172253.jpeg?auto=compress&cs=tinysrgb&w=1600"
           }
         ]
       }

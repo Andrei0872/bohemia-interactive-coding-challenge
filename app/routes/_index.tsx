@@ -4,6 +4,7 @@ import { useLoaderData } from "@remix-run/react";
 import Header from "~/components/Store/Header";
 import Featured from "~/components/Store/Featured";
 import Products from "~/components/Store/Products";
+import { getFeaturedProduct } from "~/utils/store";
 
 export const meta: MetaFunction = () => {
   return [
@@ -19,11 +20,17 @@ export const loader = async () => {
 export default function Index() {
   const data = useLoaderData<typeof loader>();
 
+  const featuredProduct = getFeaturedProduct(data.products);
+
   return (
-    <div className="h-full grid grid-rows-[auto_1fr]">
+    <div className="h-full grid grid-rows-[auto_1fr] ps-12 pe-12">
       <Header />
       <main>
-        <Featured />
+        {
+          featuredProduct
+            ? <Featured featuredProduct={featuredProduct} />
+            : null
+        }
         <Products />
       </main>
     </div>

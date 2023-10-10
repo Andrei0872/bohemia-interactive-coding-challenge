@@ -5,7 +5,8 @@ export default {
   theme: {
     extend: {},
     colors: {
-      'gray-1': '#e4e4e4'
+      'gray-1': '#e4e4e4',
+      'gray-dark-1': '#656565',
     }
   },
   plugins: [],

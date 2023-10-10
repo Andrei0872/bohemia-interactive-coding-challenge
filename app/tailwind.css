@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .flex-item-equal-size > * {
+    flex-basis: 0;
+    flex-grow: 1;
+  }
+
+  .margin-bottom-delimiter {
+    @apply border-b-4 border-b-gray-1 ;
+    border-bottom-style: solid;
+  }
+}
