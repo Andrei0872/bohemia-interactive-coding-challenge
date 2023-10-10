@@ -1,14 +1,12 @@
 import { ComponentPropsWithoutRef } from "react"
 import { Product } from "~/types/product"
 import { convertBytesToMb } from "~/utils/convertions";
+import { getImageSrc } from "~/utils/store";
 
 type Props = ComponentPropsWithoutRef<'section'> & {
   featuredProduct: Product;
 }
 
-const getImageSrc = (p: Product) => {
-  return typeof p.image === 'string' ? p.image : p.image.src;
-}
 
 function Featured(props: Props) {
   const { featuredProduct: fp } = props;
@@ -16,7 +14,7 @@ function Featured(props: Props) {
   console.log(fp);
 
   return (
-    <section className="mt-8 margin-bottom-delimiter pb-4">
+    <section className="mt-8 margin-bottom-delimiter pb-8">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold">{fp.name}</h2>
 
