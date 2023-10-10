@@ -1,0 +1,79 @@
+{
+  "products": [
+    {
+      "name": "Red Bench",
+      "category": "people",
+      "price": 3.89,
+      "currency": "USD",
+      "image": {
+        "src": "https://images.pexels.com/photos/1172253/pexels-photo-1172253.jpeg?auto=compress&cs=tinysrgb&w=1600",
+        "alt": ""
+      },
+      "bestseller": true,
+      "featured": false,
+      "details": null
+    },
+    {
+      "name": "Egg Balloon",
+      "category": "food",
+      "price": 93.89,
+      "currency": "USD",
+      "image": "https://images.pexels.com/photos/1034940/pexels-photo-1034940.jpeg?auto=compress&cs=tinysrgb&w=1600",
+      "bestseller": false,
+      "featured": false,
+      "details": null
+    },
+    {
+      "name": "Man",
+      "category": "people",
+      "price": 100,
+      "currency": "USD",
+      "image": {
+        "src": "https://images.pexels.com/photos/1005417/pexels-photo-1005417.jpeg?auto=compress&cs=tinysrgb&w=1600",
+        "alt": ""
+      },
+      "bestseller": false,
+      "featured": false,
+      "details": null
+    },
+    {
+      "name": "Architecture",
+      "category": "landmarks",
+      "price": 101,
+      "currency": "USD",
+      "dimmentions": {
+        "width": 1020,
+        "height": 1020
+      },
+      "image": "https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&w=1600",
+      "bestseller": false,
+      "featured": false,
+      "details": null
+    },
+    {
+      "name": "Samurai King Restling",
+      "category": "landmarks",
+      "price": 101,
+      "currency": "USD",
+      "image": {
+        "src": "https://images.pexels.com/photos/235922/pexels-photo-235922.jpeg?auto=compress&cs=tinysrgb&w=1600",
+        "alt": ""
+      },
+      "bestseller": false,
+      "featured": true,
+      "details": {
+        "dimmentions": {
+          "width": 1020,
+          "height": 1020
+        },
+        "size": 15000,
+        "description": "So how did the classical Latin become so incoherent? According to McClintock, a15th century typesetter likely","recommendations": [
+          {
+            "src": ""
+          }
+        ]
+      }
+    }
+  ],
+  "alt": ""
+}

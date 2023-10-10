@@ -1,41 +1,31 @@
-import type { MetaFunction } from "@remix-run/node";
+import { json, type MetaFunction } from "@remix-run/node";
+import products from '../../data/products.json'
+import { useLoaderData } from "@remix-run/react";
+import Header from "~/components/Store/Header";
+import Featured from "~/components/Store/Featured";
+import Products from "~/components/Store/Products";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "New Remix App" },
-    { name: "description", content: "Welcome to Remix!" },
+    { title: "More than art" },
+    { name: "description", content: "Images and artworks" },
   ];
 };
 
+export const loader = async () => {
+  return json(products)
+}
+
 export default function Index() {
+  const data = useLoaderData<typeof loader>();
+
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
-      <h1>Welcome to Remix</h1>
-      <ul>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/blog"
-            rel="noreferrer"
-          >
-            15m Quickstart Blog Tutorial
-          </a>
-        </li>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/jokes"
-            rel="noreferrer"
-          >
-            Deep Dive Jokes App Tutorial
-          </a>
-        </li>
-        <li>
-          <a target="_blank" href="https://remix.run/docs" rel="noreferrer">
-            Remix Docs
-          </a>
-        </li>
-      </ul>
+    <div className="h-full grid grid-rows-[auto_1fr]">
+      <Header />
+      <main>
+        <Featured />
+        <Products />
+      </main>
     </div>
   );
 }
