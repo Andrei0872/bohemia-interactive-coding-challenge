@@ -38,10 +38,15 @@ function Products() {
   const [sortingCriterion, setSortingCriterion] = useState<string>("Price");
   const [isSortingAsc, setIsSortingAsc] = useState(true);
 
+  const [perPage, setPerPage] = useState(6);
+  const [crtPage, setCrtPage] = useState(0);
+
   const shownProducts = useMemo(() => {
     if (!products?.length) {
       return [];
     }
+
+    setCrtPage(0);
 
     let result;
 
@@ -68,9 +73,10 @@ function Products() {
       return isSortingAsc ? a.price - b.price : b.price - a.price;
     });
 
-
     return result;
   }, [appliedCategoryFilters, appliedPriceRangeFilterIds, isSortingAsc, sortingCriterion]);
+
+  const paginatedProducts = shownProducts.slice(crtPage * perPage, (crtPage * perPage) + perPage);
 
   const categoryFilterHandler = (c: string) => {
     // Toggling logic(maybe it could be improved, but time is running out for now :).
@@ -99,6 +105,15 @@ function Products() {
     setIsSortingAsc(!isSortingAsc);
   }
 
+  const goToNextPage = () => {
+    setCrtPage(crtPage + 1 === pagesCount ? crtPage : crtPage + 1);
+  }
+
+  const goToPrevPage = () => {
+    setCrtPage(crtPage === 0 ? crtPage : crtPage - 1);
+  }
+
+  const pagesCount = Math.ceil(shownProducts.length / perPage);
   const productCategoryFilters = getProductsCategories(products || []);
   return (
     <section className="mt-8">
@@ -144,21 +159,24 @@ function Products() {
           onPriceRangeFilterEvent={priceRangeFilterHandler}
         />
 
-        <ProductList products={shownProducts ?? []} />
+        <ProductList products={paginatedProducts ?? []} />
       </div>
 
       <div className="flex justify-center items-center gap-3">
-        <svg width="12" height="20" viewBox="0 0 13 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg onClick={() => goToPrevPage()} width="12" height="20" viewBox="0 0 13 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M11 2L3 10L11 18" stroke="black" stroke-width="3" />
         </svg>
 
         <ul className="flex items-center gap-3 text-[29px] text-gray-3">
-          <li>1</li>
-          <li>2</li>
-          <li>3</li>
+          {
+            Array.from({ length: pagesCount })
+              .map((_, pageIdx) => (
+                <li className={`${pageIdx === crtPage ? 'font-bold text-[#000]' : ''}`} key={pageIdx}>{pageIdx + 1}</li>
+              ))
+          }
         </ul>
 
-        <svg width="12" height="20" viewBox="0 0 13 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg onClick={() => goToNextPage()} width="12" height="20" viewBox="0 0 13 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M2 2L10 10L2 18" stroke="black" stroke-width="3" />
         </svg>
       </div>

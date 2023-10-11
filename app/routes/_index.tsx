@@ -24,6 +24,8 @@ export default function Index() {
 
   const featuredProduct = getFeaturedProduct(data.products);
 
+  console.warn(data.products)
+
   return (
     <div className="h-full grid grid-rows-[auto_1fr] ps-12 pe-12">
       <CartProvider>
