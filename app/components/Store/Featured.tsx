@@ -23,7 +23,7 @@ function Featured(props: Props) {
       </div>
 
       <div className="mt-4 relative">
-        <img src={getImageSrc(fp)} alt="Featured image" />
+        <img className="h-full w-full" src={getImageSrc(fp)} alt="Featured image" />
         <div className="absolute left-0 bottom-0 bg-[#fff] text-[#000] text-[14px] p-[1rem] font-bold">Photo of the day</div>
       </div>
 
