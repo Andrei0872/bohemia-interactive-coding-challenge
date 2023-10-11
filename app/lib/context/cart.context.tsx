@@ -6,6 +6,7 @@ interface ICartContext {
   addProductToCart: (p: Product) => void;
   isCartOpen: boolean;
   setIsCartOpen: (state: boolean) => void;
+  clearCart: () => void;
 }
 const CartContext = createContext<ICartContext | undefined>(undefined);
 
@@ -27,11 +28,16 @@ export const CartProvider: React.FC<{ children: ReactNode | undefined }> = ({ ch
     setIsCartOpen(state);
   }
 
+  const clearCart = () => {
+    setCartProducts([]);
+  }
+
   const contextValue = useMemo(() => ({
     cartProducts,
     addProductToCart,
     isCartOpen,
     setIsCartOpen: setIsCartOpenHelper,
+    clearCart,
   }), [cartProducts]);
 
   return (

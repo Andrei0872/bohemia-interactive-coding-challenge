@@ -5,7 +5,7 @@ import { getCurrencySymbolFromCode, getImageSrc } from '~/utils/store';
 import { useMemo, useState } from 'react';
 
 function Header() {
-  const { cartProducts, setIsCartOpen, isCartOpen } = useCart();
+  const { cartProducts, setIsCartOpen, isCartOpen, clearCart } = useCart();
 
   const lenCartProducts = cartProducts?.length;
 
@@ -51,7 +51,7 @@ function Header() {
                   }
                 </ul>
 
-                <button className='border-[#000] border-solid border-[3px] w-[80%] mx-auto mb-4 pb-[0.4rem] pt-[0.4rem] uppercase'>Clear</button>
+                <button onClick={() => { setIsCartOpen(false); clearCart(); }} className='border-[#000] border-solid border-[3px] w-[80%] mx-auto mb-4 pb-[0.4rem] pt-[0.4rem] uppercase'>Clear</button>
               </div>
             ) : <p>No products here.</p>
           ) : null
