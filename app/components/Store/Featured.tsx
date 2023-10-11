@@ -18,7 +18,6 @@ function Featured(props: Props) {
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold">{fp.name}</h2>
 
-        {/* TODO: use props. */}
         <button className="uppercase text-base text-[#fff] bg-[#000] ps-6 pe-6 pt-[0.2rem] pb-[0.2rem]">Add to cart</button>
       </div>
 

@@ -55,8 +55,20 @@ function Products() {
         <ProductList products={products} />
       </div>
 
-      <div>
-        1,2,3,4
+      <div className="flex justify-center items-center gap-3">
+        <svg width="12" height="20" viewBox="0 0 13 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M11 2L3 10L11 18" stroke="black" stroke-width="3" />
+        </svg>
+
+        <ul className="flex items-center gap-3 text-[29px] text-gray-3">
+          <li>1</li>
+          <li>2</li>
+          <li>3</li>
+        </ul>
+
+        <svg width="12" height="20" viewBox="0 0 13 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 2L10 10L2 18" stroke="black" stroke-width="3" />
+        </svg>
       </div>
     </section>
   )
