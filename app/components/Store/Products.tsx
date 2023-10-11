@@ -3,14 +3,11 @@ import ProductFilters from "./ProductFilters"
 import ProductList from "./ProductList"
 import products from '../../../data/products.json'
 import { useLoaderData } from "@remix-run/react"
-
-export const loader = async () => {
-  return json(products)
-}
+import { useProducts } from "~/lib/context/products.context"
+import { useCart } from "~/lib/context/cart.context"
 
 function Products() {
-  const data = useLoaderData<typeof loader>();
-  const { products } = data;
+  const { products } = useProducts();
 
   return (
     <section className="mt-8">
@@ -52,7 +49,7 @@ function Products() {
           priceRanges={['pet', 'cities', 'nature']}
         />
 
-        <ProductList products={products} />
+        <ProductList products={products ?? []} />
       </div>
 
       <div className="flex justify-center items-center gap-3">

@@ -5,6 +5,8 @@ import Header from "~/components/Store/Header";
 import Featured from "~/components/Store/Featured";
 import Products from "~/components/Store/Products";
 import { getFeaturedProduct } from "~/utils/store";
+import { ProductsProvider } from "~/lib/context/products.context";
+import { CartProvider } from "~/lib/context/cart.context";
 
 export const meta: MetaFunction = () => {
   return [
@@ -24,15 +26,19 @@ export default function Index() {
 
   return (
     <div className="h-full grid grid-rows-[auto_1fr] ps-12 pe-12">
-      <Header />
-      <main>
-        {
-          featuredProduct
-            ? <Featured featuredProduct={featuredProduct} />
-            : null
-        }
-        <Products />
-      </main>
+      <CartProvider>
+        <ProductsProvider products={data.products}>
+          <Header />
+          <main>
+            {
+              featuredProduct
+                ? <Featured featuredProduct={featuredProduct} />
+                : null
+            }
+            <Products />
+          </main>
+        </ProductsProvider>
+      </CartProvider>
     </div>
   );
 }
