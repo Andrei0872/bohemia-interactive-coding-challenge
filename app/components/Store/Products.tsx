@@ -10,36 +10,49 @@ import { Product } from "~/types/product"
 import { useMemo, useState } from "react"
 
 interface PriceRangeFilter {
-  // Could be random.
-  id: string;
   prettyName: string;
   predicate: (p: Product) => boolean;
 }
-const PRICE_RANGE_FILTERS: PriceRangeFilter[] = [
-  { id: '1', prettyName: 'Lower than 20$', predicate: p => p.price < 20 },
-  { id: '2', prettyName: '20$ - 100$', predicate: p => p.price >= 20 && p.price <= 100 },
-  { id: '3', prettyName: '100$ - 200$', predicate: p => p.price >= 100 && p.price <= 200 },
-  { id: '4', prettyName: 'More than 200$', predicate: p => p.price > 200 },
-];
+const PRICE_RANGE_FILTERS = new Map<string, PriceRangeFilter>([
+  ['1', { prettyName: 'Lower than 20$', predicate: p => p.price < 20 }],
+  ['2', { prettyName: '20$ - 100$', predicate: p => p.price >= 20 && p.price <= 100 }],
+  ['3', { prettyName: '100$ - 200$', predicate: p => p.price >= 100 && p.price <= 200 }],
+  ['4', { prettyName: 'More than 200$', predicate: p => p.price > 200 }]
+]);
 
 function Products() {
   const { products } = useProducts();
 
+  // Multiple-value filter.
   const [appliedCategoryFilters, setAppliedCategoryFilters] = useState<string[]>([]);
 
+  // Single-value filter.
+  // We're still using in array in case later on it becomes a multiple-value filter.
+  const [appliedPriceRangeFilterIds, setAppliedPriceRangeFilterIds] = useState<string[]>([])
 
   const shownProducts = useMemo(() => {
     if (!products?.length) {
       return [];
     }
 
+    let result;
+
     if (!appliedCategoryFilters.length) {
-      return products;
+      result = products;
+    } else {
+      result = products.filter(p => appliedCategoryFilters.includes(p.category));
     }
-    let result = products.filter(p => appliedCategoryFilters.includes(p.category));
+
+    if (!appliedPriceRangeFilterIds.length) {
+      return result;
+    }
+
+    // For the moment, the 'Price Range Filter' is single-value only.
+    const priceRangeFilterId = appliedPriceRangeFilterIds[0];
+    result = result.filter(r => PRICE_RANGE_FILTERS.get(priceRangeFilterId)?.predicate(r))
 
     return result;
-  }, [appliedCategoryFilters]);
+  }, [appliedCategoryFilters, appliedPriceRangeFilterIds]);
 
   const categoryFilterHandler = (c: string) => {
     // Toggling logic(maybe it could be improved, but time is running out for now :).
@@ -51,9 +64,14 @@ function Products() {
     } else {
       res = [...appliedCategoryFilters, c];
     }
-``  
+    ``
     setAppliedCategoryFilters(res);
   };
+
+  const priceRangeFilterHandler = (prfId: string) => {
+    // For the moment, the 'Price Range Filter' is single-value only.
+    setAppliedPriceRangeFilterIds(appliedPriceRangeFilterIds[0] === prfId ? [] : [prfId]);
+  }
 
   const productCategoryFilters = getProductsCategories(products || []);
   return (
@@ -93,9 +111,10 @@ function Products() {
       <div className="grid pt-4 grid-cols-[auto_1fr] gap-6">
         <ProductFilters
           categories={productCategoryFilters}
-          priceRanges={PRICE_RANGE_FILTERS.map(p => p.prettyName)}
+          priceRanges={[...PRICE_RANGE_FILTERS.keys()].map(k => ({ id: k, name: PRICE_RANGE_FILTERS.get(k)!.prettyName }))}
 
           onCategoryFilterEvent={categoryFilterHandler}
+          onPriceRangeFilterEvent={priceRangeFilterHandler}
         />
 
         <ProductList products={shownProducts ?? []} />
