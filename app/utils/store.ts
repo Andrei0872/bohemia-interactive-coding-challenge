@@ -12,3 +12,7 @@ const CURRENCY_CODES_SYMBOLS = new Map([['USD', '$']]);
 export const getCurrencySymbolFromCode = (code: string) => {
   return CURRENCY_CODES_SYMBOLS.get(code) ?? '';
 }
+
+export const getProductsCategories = (products: Product[]) => {
+  return [...new Set(products.map(p => p.category))];
+}

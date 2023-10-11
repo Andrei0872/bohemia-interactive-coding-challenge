@@ -5,10 +5,57 @@ import products from '../../../data/products.json'
 import { useLoaderData } from "@remix-run/react"
 import { useProducts } from "~/lib/context/products.context"
 import { useCart } from "~/lib/context/cart.context"
+import { getProductsCategories } from "~/utils/store"
+import { Product } from "~/types/product"
+import { useMemo, useState } from "react"
+
+interface PriceRangeFilter {
+  // Could be random.
+  id: string;
+  prettyName: string;
+  predicate: (p: Product) => boolean;
+}
+const PRICE_RANGE_FILTERS: PriceRangeFilter[] = [
+  { id: '1', prettyName: 'Lower than 20$', predicate: p => p.price < 20 },
+  { id: '2', prettyName: '20$ - 100$', predicate: p => p.price >= 20 && p.price <= 100 },
+  { id: '3', prettyName: '100$ - 200$', predicate: p => p.price >= 100 && p.price <= 200 },
+  { id: '4', prettyName: 'More than 200$', predicate: p => p.price > 200 },
+];
 
 function Products() {
   const { products } = useProducts();
 
+  const [appliedCategoryFilters, setAppliedCategoryFilters] = useState<string[]>([]);
+
+
+  const shownProducts = useMemo(() => {
+    if (!products?.length) {
+      return [];
+    }
+
+    if (!appliedCategoryFilters.length) {
+      return products;
+    }
+    let result = products.filter(p => appliedCategoryFilters.includes(p.category));
+
+    return result;
+  }, [appliedCategoryFilters]);
+
+  const categoryFilterHandler = (c: string) => {
+    // Toggling logic(maybe it could be improved, but time is running out for now :).
+
+    let res;
+
+    if (appliedCategoryFilters.find(acf => acf === c)) {
+      res = appliedCategoryFilters.filter(acf => acf !== c);
+    } else {
+      res = [...appliedCategoryFilters, c];
+    }
+``  
+    setAppliedCategoryFilters(res);
+  };
+
+  const productCategoryFilters = getProductsCategories(products || []);
   return (
     <section className="mt-8">
       <div className="flex justify-between items-center">
@@ -45,11 +92,13 @@ function Products() {
 
       <div className="grid pt-4 grid-cols-[auto_1fr] gap-6">
         <ProductFilters
-          categories={['pet', 'cities', 'nature']}
-          priceRanges={['pet', 'cities', 'nature']}
+          categories={productCategoryFilters}
+          priceRanges={PRICE_RANGE_FILTERS.map(p => p.prettyName)}
+
+          onCategoryFilterEvent={categoryFilterHandler}
         />
 
-        <ProductList products={products ?? []} />
+        <ProductList products={shownProducts ?? []} />
       </div>
 
       <div className="flex justify-center items-center gap-3">

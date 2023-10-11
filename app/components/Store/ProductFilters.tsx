@@ -3,6 +3,8 @@ import { ComponentPropsWithRef } from "react"
 type Props = ComponentPropsWithRef<'div'> & {
   categories: string[];
   priceRanges: string[];
+
+  onCategoryFilterEvent: (c: string) => void;
 }
 
 function ProductFilters(props: Props) {
@@ -15,7 +17,7 @@ function ProductFilters(props: Props) {
           {
             props.categories.map(c => (
               <li key={c} className="flex items-center gap-3">
-                <input type="checkbox" name={c} id={c} />
+                <input onInput={() => props.onCategoryFilterEvent(c)} type="checkbox" name={c} id={c} />
                 <label className="capitalize" htmlFor={c}>{c}</label>
               </li>
             ))
